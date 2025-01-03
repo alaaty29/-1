@@ -1,25 +1,39 @@
-function calculateLove(){
+document.getElementById("bmiForm").addEventListener('submit',function(e){
 
-    const name1 = document.getElementById("name1").value.trim();
-    const name2 = document.getElementById("name2").value.trim();
-    
-    if(name1==="" || name2 ===""){  
-        alert("Please enter both names.");
-    }else{
+    e.preventDefault();
 
-        const lovePercentage = Math.floor(Math.random() * 101);
+    const gender = document.getElementById('gender').value;
+    const age = parseInt(document.getElementById('age').value);
+    const heightFeet = parseInt(document.getElementById('height-feet').value);
+    const heightInches = parseInt(document.getElementById('height-inches').value);
+    const weight = parseFloat(document.getElementById('weight').value);
 
-        const result = document.getElementById("result");
+    if(gender && age && heightFeet && heightInches && weight){
 
-        result.innerHTML = `${name1} and ${name2} 's Love Percentage: ${lovePercentage}`;
+        const heightInMeters = ((heightFeet * 12) + heightInches) * 0.0254;  // in meters
+        const bmi = weight / (heightInMeters * heightInMeters);
+        const resultElement = document.getElementById("result");
 
-        if(lovePercentage <30){
-            result.innerHTML += "<br> Not a Great Match. Keeping Looking!"
-        }else if(lovePercentage >= 30 && lovePercentage < 70){
-            result.innerHTML += "<br> There is potential. Give it a try!"
+        let category = '';
+
+        if(bmi < 18.5){
+            category = 'Under Weight';
+        }else if (bmi >= 18.5 && bmi < 24.9){
+            category = 'Normal Weight '
+        }else if (bmi >= 25 && bmi < 29.9){
+            category = 'Over Weight'    
         }else{
-            result.innerHTML += "<br> Great Match! Love is in the Air!"
+            category = 'Obese'
         }
-    }
-}
 
+        let resultMessage = 'Your BMI:' + bmi.toFixed(2) + '<br>';
+        resultMessage += 'Category:' + category;
+
+        resultElement.innerHTML = resultMessage;
+
+
+    }
+
+
+
+});
