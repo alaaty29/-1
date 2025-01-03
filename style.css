@@ -1,96 +1,77 @@
-body{
-    font-family: Arial, sans-serif;
-    background-color: #4f4657;
+*{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .container{
-    max-width: 500px;
-    height: 650px;
-    margin: 150px auto;
-    padding: 20px;
-    background-color: #252525;
-    border-radius: 8px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.4);
+    width: 35.87em;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 8fr 4fr;
+    background-color: #1e90ff;
+    border-radius: 0.5em;
+    animation: neon-glow 1.5s ease-in-out infinite alternate;
 }
 
-h1{
+.clock-container{
+    background-color: #1a1a1a;
+    color: #fff;
     text-align: center;
-    color: #ffffff;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #f2f2f2;
+    font-size: 3.75em;
+    margin-left: 0.2em;
+    border-radius: 0.1em;
+    padding: 0.2em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.input-group{
-    margin-bottom: 20px;
+.clock-container span{
+    width: 120px;
+    display: inline-block;
+    text-align: center;
 }
 
-.input-group label{
-    display: block;
-    margin-bottom: 10px;
-    color: #ffffff;
-    font-weight: bold;
+.hours{
+    color: #9f6d6d;
 }
 
-.input-group input,
-.input-group select{
+.minutes{
+    color: #00ff00;
+}
 
-    width: 94%;
-    padding: 12px;
-    font-size: 16px;
-    border: 2px solid #f35997;
+.seconds{
+    color: #0000ff;
+}
+
+@keyframes neon-glow{
+    0%{
+        box-shadow: 0 0 5px #ffffff, 0 0 20px #ffffff;
+    }
+    100%{
+        box-shadow: 0 0 20px #ffffff, 0 0 40px #ffffff;
+    }
+}
+
+
+.date-container{
+    padding: 10px;
+    background-color: #2784e0;
+    color: #fff;
+    text-align: center;
     border-radius: 5px;
-    background-color: #252525;
-    color: #ffffff;
 }
 
-.input-group select{
-    width: 100%;
-}
-
-
-.input-group input::-webkit-outer-spin-button,
-.input-group input::-webkit-inner-spin-button{
-    -webkit-appearance: none;
-}
-
-.input-group input:focus,
-.input-group select:focus{
-    outline: none;
-    border-color: #f35997;
-}
-
-.result{
-    margin-top: 30px;
-    border-top: 2px solid #f2f2f2 ;
-    padding-top: 20px;
-}
-
-.result h2{
-    margin-bottom: 15px;
-    color: #ffffff;
-    text-align: center;
-}
-
-.result div{
-    margin-bottom: 10px;
-    color: #ffffff;
-}
-
-#calculateBtn{
-    padding: 12px 20px;
-    background-color: #f35997;
-    border-radius: 5px;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    margin-left: 200px;
-    text-align: center;
-    transition:   background-color 0.3s ease;
-}
-
-#calculateBtn:hover{
-    background-color: #4f4657;
+.date-container span{
+    font-size: 2.5em;
 }

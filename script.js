@@ -1,60 +1,63 @@
-function calculateTip(){
+let dateContainer = document.querySelector(".date-container");
+let hoursContainer = document.querySelector(".hours");
+let minutesContainer = document.querySelector(".minutes");
+let secondsContainer = document.querySelector(".seconds");
 
 
-    const billAmountInput = document.getElementById("billAmount");
-    const serviceRatingSelect = document.getElementById("serviceRating");
-    const splitCountInput = document.getElementById("splitCount");
-    const mealTypeSelect = document.getElementById("mealType");
+const weekdays =[
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wendesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+];
 
-    const tipAmountOutput = document.getElementById("tipAmount");
-    const totalAmountOutput = document.getElementById("totalAmount");
-    const amountPerPersonOutput = document.getElementById("amountPerPerson");
-
-    const billAmount = parseFloat(billAmountInput.value);
-    const serviceRating = parseFloat(serviceRatingSelect.value);
-    const splitCount = parseInt(splitCountInput.value);
-    const mealType = mealTypeSelect.value;
-
-    if(isNaN(billAmount) || isNaN(serviceRating) || isNaN(splitCount)){
-        tipAmountOutput.textContent = "Please Enter Valid Numbers";
-        totalAmountOutput.textContent ="";
-        amountPerPersonOutput.textContent = "";
-        return;
-    }
-
-    let tip;
-        switch(serviceRating){
-                case 1:
-                     tip = billAmount * 0.05;
-                    break;
-                case 2:
-                     tip = billAmount * 0.10;
-                    break;
-                case 3:
-                     tip = billAmount * 0.15;
-                    break;
-                case 4:
-                     tip = billAmount * 0.20;
-                    break;
-        }
-
-        let totalAmount = billAmount + tip;
-        let amountPerPerson = totalAmount / splitCount;
-
-        if(mealType === "dinner"){
-            tip += 5;
-            totalAmount += 5;
-            amountPerPerson +=5;
-        }
+const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
 
 
-        tipAmountOutput.textContent = `Tip: $${tip.toFixed(2)}`;
-        totalAmountOutput.textContent = `Total Amount: $${totalAmount.toFixed(2)}`;
-        amountPerPersonOutput.textContent = `Amount Per Person: $${amountPerPerson.toFixed(2)}`;
+function formatTime(time){
+    return time < 10 ? "0" + time : time;  //  0 : 45 : 10  -> 00 : 45 : 10 
+}
+
+function updateClock(){
 
 
+    const today = new Date();
+   // console.log(today);
+    let date = today.getDate();
+   // console.log(date)
+    let day = weekdays[today.getDay()];
+    let month = monthNames[today.getMonth()];
+
+    // console.log(day,month)
+    // console.log(today.getDay(),today.getMonth());
+
+    let hours = formatTime(today.getHours());
+    let minutes = formatTime(today.getMinutes());
+    let seconds = formatTime(today.getSeconds());
+
+
+     dateContainer.innerHTML = ` <p>${day}</p><p><span>${date}</span></p><p>${month}</p>`;   
+
+     hoursContainer.textContent = hours + ":";
+     minutesContainer.textContent = minutes + ":";
+     secondsContainer.textContent = seconds;
 
 }
 
-
-document.getElementById("calculateBtn").addEventListener("click",calculateTip);
+setInterval(updateClock,1000);
