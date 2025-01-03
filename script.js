@@ -1,39 +1,34 @@
-document.getElementById("bmiForm").addEventListener('submit',function(e){
-
-    e.preventDefault();
-
-    const gender = document.getElementById('gender').value;
-    const age = parseInt(document.getElementById('age').value);
-    const heightFeet = parseInt(document.getElementById('height-feet').value);
-    const heightInches = parseInt(document.getElementById('height-inches').value);
-    const weight = parseFloat(document.getElementById('weight').value);
-
-    if(gender && age && heightFeet && heightInches && weight){
-
-        const heightInMeters = ((heightFeet * 12) + heightInches) * 0.0254;  // in meters
-        const bmi = weight / (heightInMeters * heightInMeters);
-        const resultElement = document.getElementById("result");
-
-        let category = '';
-
-        if(bmi < 18.5){
-            category = 'Under Weight';
-        }else if (bmi >= 18.5 && bmi < 24.9){
-            category = 'Normal Weight '
-        }else if (bmi >= 25 && bmi < 29.9){
-            category = 'Over Weight'    
-        }else{
-            category = 'Obese'
-        }
-
-        let resultMessage = 'Your BMI:' + bmi.toFixed(2) + '<br>';
-        resultMessage += 'Category:' + category;
-
-        resultElement.innerHTML = resultMessage;
+document.getElementById('calculateBtn').addEventListener('click',calculateLoan);
 
 
+function calculateLoan(){
+
+
+const loanAmount = parseFloat(document.getElementById("loanAmountInput").value);
+const interestRate = parseFloat(document.getElementById("interestRateInput").value);
+const loanTerm = parseFloat(document.getElementById("loanTermInput").value);
+
+
+    if(isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTerm)){
+        alert("Please Enter valid Numbers for all the Fields");
     }
 
+    const monthlyInterest = interestRate /100 / 12;
+    const totalPayments = loanTerm;
+    const monthlyPayment = (loanAmount * monthlyInterest)/(1-Math.pow(1 + monthlyInterest, -totalPayments));
+    const totalInterst = (monthlyPayment * totalPayments) - loanAmount;
 
 
-});
+    displayResult(monthlyPayment,totalInterst);
+
+}
+
+function displayResult(monthlyPayment, totalInterst){
+
+    const resultDiv = document.getElementById('result');
+
+    resultDiv.innerHTML = `
+        <p><strong>Monthly Payment: ${monthlyPayment.toFixed(2)}</p></strong>
+        <p><strong>Total Interest: ${totalInterst.toFixed(2)}</p></strong>
+    `;
+}
