@@ -1,30 +1,65 @@
-function isPlaindrome(str){
+const redSlider = document.getElementById("redSlider");
+const greenSlider = document.getElementById("greenSlider");
+const blueSlider = document.getElementById("blueSlider");
 
-    const cleanStr = str.toLowerCase().replace(/[^a-z0-9]/g,'');
-    console.log(cleanStr);
+const redValueSpan = document.getElementById("redValue");
+const greenValueSpan = document.getElementById("greenValue");
+const blueValueSpan = document.getElementById("blueValue");
 
-    const reversedStr = cleanStr.split('').reverse().join('');
-    console.log(reversedStr);
+const colorBox = document.getElementById("color-box");
+const copyButton = document.getElementById("copyButton");
+const inputTypeRGBValue = document.getElementById("inputType");
 
-    return cleanStr === reversedStr;
+
+redSlider.addEventListener('input',updateColor);
+greenSlider.addEventListener('input',updateColor);
+blueSlider.addEventListener('input',updateColor);
+copyButton.addEventListener('click',copyRGBValue);
+
+
+function updateColor(){
+
+    const redValue = redSlider.value;
+    const greenValue = greenSlider.value;
+    const blueValue = blueSlider.value;
+
+    //console.log(redValue,greenValue,blueValue);
+
+    const rgbColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+    //console.log(rgbColor);
+
+    colorBox.style.backgroundColor = rgbColor;
+
+    redValueSpan.textContent = redValue;
+    greenValueSpan.textContent = greenValue;
+    blueValueSpan.textContent = blueValue;
+    
+    inputTypeRGBValue.textContent = rgbColor;
+
+    
 }
 
+updateColor();
 
-function plaindromeChecker(){
 
-    const inputText = document.getElementById("inputText");
-    const result = document.getElementById("result");
 
-    if(isPlaindrome(inputText.value)){
-        result.textContent = `"${inputText.value}" is a Palindrome`;
-    }else{
-        result.textContent = `"${inputText.value}" is Not a Palindrome`;
-    }
 
-    result.classList.add('fadeIn');
-    inputText.value = "";
 
+
+
+function copyRGBValue(){
+
+    const redValue = redSlider.value;
+    const greenValue = greenSlider.value;
+    const blueValue = blueSlider.value;
+
+    const rgbColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+
+    navigator.clipboard.writeText(rgbColor)
+        .then(()=>{
+            alert("RGB Color Value copied to Clipboard: " + rgbColor);
+        })
+        .catch((error)=>{
+            console.error("Failed to copy RGB Values",error);
+        });
 }
-
-
-document.getElementById('checkButton').addEventListener("click",plaindromeChecker);
