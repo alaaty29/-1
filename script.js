@@ -1,65 +1,60 @@
-const redSlider = document.getElementById("redSlider");
-const greenSlider = document.getElementById("greenSlider");
-const blueSlider = document.getElementById("blueSlider");
-
-const redValueSpan = document.getElementById("redValue");
-const greenValueSpan = document.getElementById("greenValue");
-const blueValueSpan = document.getElementById("blueValue");
-
-const colorBox = document.getElementById("color-box");
-const copyButton = document.getElementById("copyButton");
-const inputTypeRGBValue = document.getElementById("inputType");
+function calculateTip(){
 
 
-redSlider.addEventListener('input',updateColor);
-greenSlider.addEventListener('input',updateColor);
-blueSlider.addEventListener('input',updateColor);
-copyButton.addEventListener('click',copyRGBValue);
+    const billAmountInput = document.getElementById("billAmount");
+    const serviceRatingSelect = document.getElementById("serviceRating");
+    const splitCountInput = document.getElementById("splitCount");
+    const mealTypeSelect = document.getElementById("mealType");
+
+    const tipAmountOutput = document.getElementById("tipAmount");
+    const totalAmountOutput = document.getElementById("totalAmount");
+    const amountPerPersonOutput = document.getElementById("amountPerPerson");
+
+    const billAmount = parseFloat(billAmountInput.value);
+    const serviceRating = parseFloat(serviceRatingSelect.value);
+    const splitCount = parseInt(splitCountInput.value);
+    const mealType = mealTypeSelect.value;
+
+    if(isNaN(billAmount) || isNaN(serviceRating) || isNaN(splitCount)){
+        tipAmountOutput.textContent = "Please Enter Valid Numbers";
+        totalAmountOutput.textContent ="";
+        amountPerPersonOutput.textContent = "";
+        return;
+    }
+
+    let tip;
+        switch(serviceRating){
+                case 1:
+                     tip = billAmount * 0.05;
+                    break;
+                case 2:
+                     tip = billAmount * 0.10;
+                    break;
+                case 3:
+                     tip = billAmount * 0.15;
+                    break;
+                case 4:
+                     tip = billAmount * 0.20;
+                    break;
+        }
+
+        let totalAmount = billAmount + tip;
+        let amountPerPerson = totalAmount / splitCount;
+
+        if(mealType === "dinner"){
+            tip += 5;
+            totalAmount += 5;
+            amountPerPerson +=5;
+        }
 
 
-function updateColor(){
+        tipAmountOutput.textContent = `Tip: $${tip.toFixed(2)}`;
+        totalAmountOutput.textContent = `Total Amount: $${totalAmount.toFixed(2)}`;
+        amountPerPersonOutput.textContent = `Amount Per Person: $${amountPerPerson.toFixed(2)}`;
 
-    const redValue = redSlider.value;
-    const greenValue = greenSlider.value;
-    const blueValue = blueSlider.value;
 
-    //console.log(redValue,greenValue,blueValue);
 
-    const rgbColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
-    //console.log(rgbColor);
-
-    colorBox.style.backgroundColor = rgbColor;
-
-    redValueSpan.textContent = redValue;
-    greenValueSpan.textContent = greenValue;
-    blueValueSpan.textContent = blueValue;
-    
-    inputTypeRGBValue.textContent = rgbColor;
-
-    
 }
 
-updateColor();
 
-
-
-
-
-
-
-function copyRGBValue(){
-
-    const redValue = redSlider.value;
-    const greenValue = greenSlider.value;
-    const blueValue = blueSlider.value;
-
-    const rgbColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
-
-    navigator.clipboard.writeText(rgbColor)
-        .then(()=>{
-            alert("RGB Color Value copied to Clipboard: " + rgbColor);
-        })
-        .catch((error)=>{
-            console.error("Failed to copy RGB Values",error);
-        });
-}
+document.getElementById("calculateBtn").addEventListener("click",calculateTip);
